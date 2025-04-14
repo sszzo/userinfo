@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>معلومات المشترك</title>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #e9f5ec;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 45%;
+      min-width: 300px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c6e49;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #333;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      font-family: 'Cairo', sans-serif;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      background-color: #2c6e49;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .dual-buttons {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background-color: #14532d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 90%;
+      max-width: 500px;
+    }
+    .dual-buttons button {
+      width: 100%;
+      margin: 0;
+      background-color: #14532d;
+    }
+    .card {
+      display: none;
+      background: linear-gradient(135deg, #f1f3f4, #ffffff);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(44, 110, 73, 0.2);
+      padding: 12px;
+      width: 45%;
+      min-width: 300px;
+      position: relative;
+      border: 1px solid #b0bec5;
+      margin-top: 20px;
+      font-size: 12px;
+    }
+    .card h3 {
+      text-align: center;
+      color: #2c6e49;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .card-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      border: 1px solid #cfd8dc;
+      padding: 6px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+    }
+    .card-item .label {
+      display: flex;
+      align-items: center;
+      color: #37474f;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .card-item i {
+      color: #d4af37;
+      font-size: 13px;
+      margin-left: 6px;
+    }
+    .card-item p {
+      font-size: 12px;
+      color: #2c6e49;
+      margin: 0;
+      text-align: left;
+    }
+    .debt-section {
+      text-align: center;
+      margin-top: 8px;
+      background-color: #ffcdd2;
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid #e57373;
+      font-size: 12px;
+    }
+    .debt-section span {
+      font-weight: bold;
+      font-size: 13px;
+      color: #c62828;
+      display: block;
+    }
+    .debt-section p {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #b71c1c;
+    }
+    .note {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 10px;
+      color: #555;
+    }
+    .custom-upload-btn {
+      display: inline-block;
+      padding: 12px;
+      background-color: #2c6e49;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px; /* تم تعديل الحجم ليكون متوافقاً مع زر "عرض البيانات" */
+      font-weight: bold;
+      text-align: center;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+      width: 100%; /* تأكد من أن الزر يعرض بعرض كامل */
+    }
+    .custom-upload-btn:hover {
+      background-color: #1b4d36;
+    }
+    .custom-upload-btn i {
+      margin-left: 8px;
+      color: #f1c40f;
+    }
+    /* تعديل لتوحيد العرض والتنسيق لجميع الخانات والأزرار */
+    label input[type="time"], label input[type="number"], label select, label textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 16px; /* موحد مع باقي الأزرار */
+      box-sizing: border-box;
+    }
+
+    /* تعديل التنسيق لجميع الأزرار لتكون بنفس الحجم */
+    button, .custom-upload-btn {
+      width: 100%;
+      font-size: 16px;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>ادخال معلومات المشترك</h2>
+    <div id="fileInputWrapper">
+      <input type="file" id="jsonFile" accept=".json" hidden>
+      <label for="jsonFile" class="custom-upload-btn" id="uploadBtn"><i class="fas fa-upload"></i> اختر ملف المعلومات</label>
+      <button onclick="resetData()" id="newFileBtn" class="custom-upload-btn" style="display: none; background-color:#a94442"><i class="fas fa-sync-alt"></i> ادخال ملف معلومات جديد</button>
+    </div>
+    <label>اسم المشترك:
+      <select id="nameSelect"></select>
+    </label>
+    <label id="phoneWrapper">رقم الهاتف:
+      <input type="text" id="phone" readonly>
+    </label>
+    <label>تاريخ التفعيل:
+      <div style="display: flex; gap: 10px;">
+        <input type="number" id="startDay" placeholder="اليوم">
+        <input type="number" id="startMonth" placeholder="الشهر">
+      </div>
+    </label>
+    <label>مدة الاشتراك:
+      <select id="durationSelect">
+        <option value="30">30 يوم</option>
+        <option value="sameDay">في نفس اليوم من الشهر القادم</option>
+      </select>
+    </label>
+    <label>وقت الانتهاء:
+      <input type="time" id="endTime">
+    </label>
+    <label>مبلغ الاشتراك:
+      <select id="amount">
+        <option value="30">30</option>
+        <option value="35">35</option>
+        <option value="40">40</option>
+        <option value="45">45</option>
+        <option value="50">50</option>
+        <option value="60">60</option>
+        <option value="70">70</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+    <label>الديون المتراكمة:
+      <textarea id="debt" rows="2"></textarea>
+    </label>
+    <button onclick="displayData()">عرض البيانات</button>
+  </div>
+  <div class="card" id="resultCard">
+    <h3>معلومات المشترك</h3>
+    <div class="card-item">
+      <div class="label"><i class="fas fa-user"></i> اسم المشترك:</div>
+      <p id="resName"></p>
+    </div>
+    <div class="card-item">
+      <div class="label"><i class="fas fa-phone"></i> رقم الهاتف:</div>
+      <p id="resPhone"></p>
+    </div>
+    <div class="card-item">
+      <div class="label"><i class="fas fa-calendar-plus"></i> تاريخ التفعيل:</div>
+      <p id="resStart"></p>
+    </div>
+    <div class="card-item">
+      <div class="label"><i class="fas fa-calendar-minus"></i> تاريخ الانتهاء:</div>
+      <p id="resEnd"></p>
+    </div>
+    <div class="card-item">
+      <div class="label"><i class="fas fa-clock"></i> وقت الانتهاء:</div>
+      <p id="resEndTime"></p>
+    </div>
+    <div class="card-item">
+      <div class="label"><i class="fas fa-dollar-sign"></i> مبلغ الاشتراك:</div>
+      <p id="resAmount"></p>
+    </div>
+    <div class="debt-section">
+      <span>الديون المتراكمة:</span>
+      <p id="resDebt"></p>
+    </div>
+    <div class="note">
+      ملاحظة: مدة الاشتراك محسوبة تلقائيًا حسب الخيار المحدد.
+    </div>
+  </div>
+  <div class="dual-buttons">
+    <button onclick="saveCardAsImage()">حفظ البطاقة</button>
+  </div>
+  <script>
+    let subscribers = [];
+
+    if (localStorage.getItem('subscribers')) {
+      subscribers = JSON.parse(localStorage.getItem('subscribers'));
+      populateNames();
+      document.getElementById('uploadBtn').style.display = 'none';
+      document.getElementById('newFileBtn').style.display = 'inline-block';
+    }
+
+    document.getElementById('jsonFile').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        subscribers = JSON.parse(e.target.result);
+        localStorage.setItem('subscribers', JSON.stringify(subscribers));
+        populateNames();
+        document.getElementById('uploadBtn').style.display = 'none';
+        document.getElementById('newFileBtn').style.display = 'inline-block';
+      };
+      reader.readAsText(file);
+    });
+
+    function populateNames() {
+      const nameSelect = document.getElementById('nameSelect');
+      nameSelect.innerHTML = '';
+      subscribers.forEach(sub => {
+        const option = document.createElement('option');
+        option.value = sub.phone;
+        option.textContent = sub.name;
+        nameSelect.appendChild(option);
+      });
+      nameSelect.addEventListener('change', () => {
+        document.getElementById('phone').value = nameSelect.value;
+        document.getElementById('phoneWrapper').style.display = 'none';
+      });
+      document.getElementById('phone').value = nameSelect.value;
+      document.getElementById('phoneWrapper').style.display = 'none';
+    }
+
+    function displayData() {
+      const name = document.getElementById('nameSelect').selectedOptions[0].textContent;
+      const phone = document.getElementById('phone').value;
+      const startDay = parseInt(document.getElementById('startDay').value);
+      const startMonth = parseInt(document.getElementById('startMonth').value);
+      const endTime = document.getElementById('endTime').value;
+      const amount = document.getElementById('amount').value;
+      const debt = document.getElementById('debt').value;
+      const duration = document.getElementById('durationSelect').value;
+
+      const startDate = new Date(2025, startMonth - 1, startDay);
+      let endDate;
+      if (duration === '30') {
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 30);
+      } else {
+        endDate = new Date(startDate);
+        endDate.setMonth(startDate.getMonth() + 1);
+      }
+      const endDay = endDate.getDate();
+      const endMonth = endDate.getMonth() + 1;
+
+      document.getElementById('resName').textContent = name;
+      document.getElementById('resPhone').textContent = phone;
+      document.getElementById('resStart').textContent = `${startDay}/${startMonth}/2025`;
+      document.getElementById('resEnd').textContent = `${endDay}/${endMonth}/2025`;
+      document.getElementById('resEndTime').textContent = formatTimeTo12Hour(endTime);
+      document.getElementById('resAmount').textContent = `${amount} ألف دينار`;
+      document.getElementById('resDebt').textContent = debt || 'لا توجد ديون';
+
+      document.getElementById('resultCard').style.display = 'block';
+      document.querySelector('.dual-buttons').style.display = 'block';
+    }
+
+    function formatTimeTo12Hour(time24) {
+      if (!time24) return '---';
+      const [hourStr, minute] = time24.split(':');
+      let hour = parseInt(hourStr);
+      const ampm = hour >= 12 ? 'مساءً' : 'صباحًا';
+      hour = hour % 12 || 12;
+      return `${hour}:${minute} ${ampm}`;
+    }
+
+    function saveCardAsImage() {
+      html2canvas(document.getElementById('resultCard')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `${document.getElementById('nameSelect').selectedOptions[0].textContent || 'بطاقة_المشترك'}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+
+    function resetData() {
+      localStorage.removeItem('subscribers');
+      document.getElementById('uploadBtn').style.display = 'block';
+      document.getElementById('newFileBtn').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
