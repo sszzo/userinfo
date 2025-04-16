@@ -221,6 +221,20 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
+function interceptBlobDownload(blob, fileName) {
+  const reader = new FileReader();
+  reader.onloadend = function () {
+    if (window.AndroidDownloader) {
+      AndroidDownloader.downloadBlob(reader.result, fileName);
+    }
+  };
+  reader.readAsDataURL(blob);
+}
+const originalCreateObjectURL = URL.createObjectURL;
+URL.createObjectURL = function(blob) {
+  interceptBlobDownload(blob, 'downloaded_file.json');
+  return originalCreateObjectURL.call(URL, blob);
+};
   </script>
 </body>
 </html>
