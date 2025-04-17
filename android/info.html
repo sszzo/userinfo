@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>معلومات المشترك</title>
+  <title>معلومات@ المشترك</title>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -153,12 +153,12 @@
       color: white;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px; /* تم تعديل الحجم ليكون متوافقاً مع زر "عرض البيانات" */
+      font-size: 16px; 
       font-weight: bold;
       text-align: center;
       transition: background-color 0.3s;
       margin-top: 10px;
-      width: 100%; /* تأكد من أن الزر يعرض بعرض كامل */
+      width: 100%; 
     }
     .custom-upload-btn:hover {
       background-color: #1b4d36;
@@ -167,32 +167,13 @@
       margin-left: 8px;
       color: #f1c40f;
     }
-    /* تعديل لتوحيد العرض والتنسيق لجميع الخانات والأزرار */
-    label input[type="time"], label input[type="number"], label select, label textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      font-family: 'Cairo', sans-serif;
-      font-size: 16px; /* موحد مع باقي الأزرار */
-      box-sizing: border-box;
-    }
-
-    /* تعديل التنسيق لجميع الأزرار لتكون بنفس الحجم */
-    button, .custom-upload-btn {
-      width: 100%;
-      font-size: 16px;
-      padding: 12px;
-      box-sizing: border-box;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>ادخال معلومات المشترك</h2>
     <div id="fileInputWrapper">
-      <input type="file" id="jsonFile" accept=".json" hidden>
+      <input type="file" id="jsonFile" accept=".json" hidden onchange="loadJSONFile()">
       <label for="jsonFile" class="custom-upload-btn" id="uploadBtn"><i class="fas fa-upload"></i> اختر ملف المعلومات</label>
       <button onclick="resetData()" id="newFileBtn" class="custom-upload-btn" style="display: none; background-color:#a94442"><i class="fas fa-sync-alt"></i> ادخال ملف معلومات جديد</button>
     </div>
@@ -281,18 +262,31 @@
       document.getElementById('newFileBtn').style.display = 'inline-block';
     }
 
-    document.getElementById('jsonFile').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        subscribers = JSON.parse(e.target.result);
-        localStorage.setItem('subscribers', JSON.stringify(subscribers));
-        populateNames();
-        document.getElementById('uploadBtn').style.display = 'none';
-        document.getElementById('newFileBtn').style.display = 'inline-block';
-      };
-      reader.readAsText(file);
-    });
+    function loadJSONFile() {
+      const fileInput = document.getElementById("jsonFile");
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const importedData = JSON.parse(e.target.result);
+            if (Array.isArray(importedData)) {
+              subscribers = subscribers.concat(importedData); // دمج البيانات المستوردة مع البيانات الحالية
+              localStorage.setItem('subscribers', JSON.stringify(subscribers)); // حفظ البيانات في التخزين المحلي
+              populateNames();
+              document.getElementById('uploadBtn').style.display = 'none';
+              document.getElementById('newFileBtn').style.display = 'inline-block';
+              alert("تم تحميل البيانات من الملف بنجاح");
+            } else {
+              alert("الملف غير صالح. تأكد أنه ملف JSON يحتوي على قائمة من الأسماء والأرقام.");
+            }
+          } catch (err) {
+            alert("حدث خطأ أثناء قراءة الملف.");
+          }
+        };
+        reader.readAsText(file);
+      }
+    }
 
     function populateNames() {
       const nameSelect = document.getElementById('nameSelect');
@@ -305,69 +299,32 @@
       });
       nameSelect.addEventListener('change', () => {
         document.getElementById('phone').value = nameSelect.value;
-        document.getElementById('phoneWrapper').style.display = 'none';
+        document.getElementById('resName').textContent = nameSelect.options[nameSelect.selectedIndex].text;
       });
-      document.getElementById('phone').value = nameSelect.value;
-      document.getElementById('phoneWrapper').style.display = 'none';
     }
 
     function displayData() {
-      const name = document.getElementById('nameSelect').selectedOptions[0].textContent;
-      const phone = document.getElementById('phone').value;
-      const startDay = parseInt(document.getElementById('startDay').value);
-      const startMonth = parseInt(document.getElementById('startMonth').value);
-      const endTime = document.getElementById('endTime').value;
-      const amount = document.getElementById('amount').value;
-      const debt = document.getElementById('debt').value;
-      const duration = document.getElementById('durationSelect').value;
-
-      const startDate = new Date(2025, startMonth - 1, startDay);
-      let endDate;
-      if (duration === '30') {
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 30);
-      } else {
-        endDate = new Date(startDate);
-        endDate.setMonth(startDate.getMonth() + 1);
+      const selectedPhone = document.getElementById('phone').value;
+      const subscriber = subscribers.find(sub => sub.phone === selectedPhone);
+      if (subscriber) {
+        document.getElementById('resName').textContent = subscriber.name;
+        document.getElementById('resPhone').textContent = subscriber.phone;
+        document.getElementById('resStart').textContent = `${document.getElementById('startDay').value} - ${document.getElementById('startMonth').value}`;
+        document.getElementById('resEnd').textContent = `${document.getElementById('startDay').value} - ${document.getElementById('startMonth').value}`;
+        document.getElementById('resEndTime').textContent = document.getElementById('endTime').value;
+        document.getElementById('resAmount').textContent = document.getElementById('amount').value;
+        document.getElementById('resDebt').textContent = document.getElementById('debt').value;
+        document.getElementById('resultCard').style.display = 'block';
       }
-      const endDay = endDate.getDate();
-      const endMonth = endDate.getMonth() + 1;
-
-      document.getElementById('resName').textContent = name;
-      document.getElementById('resPhone').textContent = phone;
-      document.getElementById('resStart').textContent = `${startDay}/${startMonth}/2025`;
-      document.getElementById('resEnd').textContent = `${endDay}/${endMonth}/2025`;
-      document.getElementById('resEndTime').textContent = formatTimeTo12Hour(endTime);
-      document.getElementById('resAmount').textContent = `${amount} ألف دينار`;
-      document.getElementById('resDebt').textContent = debt || 'لا توجد ديون';
-
-      document.getElementById('resultCard').style.display = 'block';
-      document.querySelector('.dual-buttons').style.display = 'block';
-    }
-
-    function formatTimeTo12Hour(time24) {
-      if (!time24) return '---';
-      const [hourStr, minute] = time24.split(':');
-      let hour = parseInt(hourStr);
-      const ampm = hour >= 12 ? 'مساءً' : 'صباحًا';
-      hour = hour % 12 || 12;
-      return `${hour}:${minute} ${ampm}`;
-    }
-
-    function saveCardAsImage() {
-      html2canvas(document.getElementById('resultCard')).then(canvas => {
-        const link = document.createElement('a');
-        link.download = `${document.getElementById('nameSelect').selectedOptions[0].textContent || 'بطاقة_المشترك'}.png`;
-        link.href = canvas.toDataURL();
-        link.click();
-      });
     }
 
     function resetData() {
-      localStorage.removeItem('subscribers');
-      document.getElementById('uploadBtn').style.display = 'block';
+      document.getElementById('jsonFile').value = '';
+      document.getElementById('uploadBtn').style.display = 'inline-block';
       document.getElementById('newFileBtn').style.display = 'none';
+      subscribers = [];
+      localStorage.removeItem('subscribers');
     }
   </script>
 </body>
-  </html>
+        </html>
