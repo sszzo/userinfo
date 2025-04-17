@@ -59,14 +59,26 @@
       transition: 0.3s;
     }
 
-    .add-btn { background-color: #2c6e49; }
-    .add-btn:hover { background-color: #14532d; }
+    .add-btn {
+      background-color: #2c6e49;
+    }
+    .add-btn:hover {
+      background-color: #14532d;
+    }
 
-    .file-btn { background-color: #007bff; }
-    .file-btn:hover { background-color: #0056b3; }
+    .file-btn {
+      background-color: #007bff;
+    }
+    .file-btn:hover {
+      background-color: #0056b3;
+    }
 
-    .download-btn { background-color: #f59e0b; }
-    .download-btn:hover { background-color: #d97706; }
+    .download-btn {
+      background-color: #f59e0b;
+    }
+    .download-btn:hover {
+      background-color: #d97706;
+    }
 
     ul {
       margin-top: 20px;
@@ -196,17 +208,11 @@
 
     function downloadJSON() {
       const jsonStr = JSON.stringify(data, null, 2);
-      const blob = new Blob([jsonStr], { type: "application/json" });
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        const base64data = reader.result;
-        if (window.AndroidDownloader && AndroidDownloader.downloadBlob) {
-          AndroidDownloader.downloadBlob(base64data, "ملف المعلومات.json");
-        } else {
-          alert("Download interface not found!");
-        }
-      };
-      reader.readAsDataURL(blob);
+      if (typeof Android !== "undefined" && Android.saveFile) {
+        Android.saveFile(jsonStr);
+      } else {
+        alert("الحفظ غير مدعوم في هذا المتصفح");
+      }
     }
   </script>
 </body>
