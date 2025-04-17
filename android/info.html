@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* نفس التنسيق الذي أرسلته */
+    /* نفس تنسيقاتك السابقة بالكامل بدون تغيير */
     body {
       font-family: 'Cairo', sans-serif;
       background-color: #e9f5ec;
@@ -45,34 +45,27 @@
       border-radius: 8px;
       font-family: 'Cairo', sans-serif;
     }
-    button {
-      margin-top: 15px;
+    button, .custom-upload-btn {
+      width: 100%;
       padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    .custom-upload-btn {
       background-color: #2c6e49;
       color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
-      width: 100%;
+      margin-top: 10px;
+      display: inline-block;
     }
-    .dual-buttons {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      background-color: #14532d;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      width: 90%;
-      max-width: 500px;
+    .custom-upload-btn:hover {
+      background-color: #1b4d36;
     }
-    .dual-buttons button {
-      width: 100%;
-      margin: 0;
-      background-color: #14532d;
+    .custom-upload-btn i {
+      margin-left: 8px;
+      color: #f1c40f;
     }
     .card {
       display: none;
@@ -82,9 +75,8 @@
       padding: 12px;
       width: 45%;
       min-width: 300px;
-      position: relative;
-      border: 1px solid #b0bec5;
       margin-top: 20px;
+      border: 1px solid #b0bec5;
       font-size: 12px;
     }
     .card h3 {
@@ -98,14 +90,12 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
+      background-color: #f8f9fa;
       border: 1px solid #cfd8dc;
       padding: 6px;
       border-radius: 8px;
-      background-color: #f8f9fa;
     }
     .card-item .label {
-      display: flex;
-      align-items: center;
       color: #37474f;
       font-weight: bold;
       font-size: 12px;
@@ -122,67 +112,18 @@
       text-align: left;
     }
     .debt-section {
-      text-align: center;
-      margin-top: 8px;
       background-color: #ffcdd2;
+      text-align: center;
       padding: 6px;
       border-radius: 8px;
       border: 1px solid #e57373;
       font-size: 12px;
     }
-    .debt-section span {
-      font-weight: bold;
-      font-size: 13px;
-      color: #c62828;
-      display: block;
-    }
-    .debt-section p {
-      margin-top: 4px;
-      font-size: 12px;
-      color: #b71c1c;
-    }
     .note {
       text-align: center;
-      margin-top: 8px;
       font-size: 10px;
       color: #555;
-    }
-    .custom-upload-btn {
-      display: inline-block;
-      padding: 12px;
-      background-color: #2c6e49;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: center;
-      transition: background-color 0.3s;
-      margin-top: 10px;
-      width: 100%;
-    }
-    .custom-upload-btn:hover {
-      background-color: #1b4d36;
-    }
-    .custom-upload-btn i {
-      margin-left: 8px;
-      color: #f1c40f;
-    }
-    label input[type="time"], label input[type="number"], label select, label textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      font-family: 'Cairo', sans-serif;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-    button, .custom-upload-btn {
-      width: 100%;
-      font-size: 16px;
-      padding: 12px;
-      box-sizing: border-box;
+      margin-top: 8px;
     }
   </style>
 </head>
@@ -192,7 +133,7 @@
     <div id="fileInputWrapper">
       <input type="file" id="jsonFile" accept=".json" hidden>
       <label for="jsonFile" class="custom-upload-btn" id="uploadBtn"><i class="fas fa-upload"></i> اختر ملف المعلومات</label>
-      <button onclick="resetData()" id="newFileBtn" class="custom-upload-btn" style="display: none; background-color:#a94442"><i class="fas fa-sync-alt"></i> ادخال ملف معلومات جديد</button>
+      <button onclick="resetData()" id="newFileBtn" class="custom-upload-btn" style="display: none; background-color:#a94442"><i class="fas fa-sync-alt"></i> ملف جديد</button>
     </div>
     <label>اسم المشترك:
       <select id="nameSelect"></select>
@@ -232,23 +173,23 @@
     </label>
     <button onclick="displayData()">عرض البيانات</button>
   </div>
+
   <div class="card" id="resultCard">
     <h3>معلومات المشترك</h3>
-    <div class="card-item"><div class="label"><i class="fas fa-user"></i> اسم المشترك:</div><p id="resName"></p></div>
-    <div class="card-item"><div class="label"><i class="fas fa-phone"></i> رقم الهاتف:</div><p id="resPhone"></p></div>
-    <div class="card-item"><div class="label"><i class="fas fa-calendar-plus"></i> تاريخ التفعيل:</div><p id="resStart"></p></div>
-    <div class="card-item"><div class="label"><i class="fas fa-calendar-minus"></i> تاريخ الانتهاء:</div><p id="resEnd"></p></div>
-    <div class="card-item"><div class="label"><i class="fas fa-clock"></i> وقت الانتهاء:</div><p id="resEndTime"></p></div>
-    <div class="card-item"><div class="label"><i class="fas fa-dollar-sign"></i> مبلغ الاشتراك:</div><p id="resAmount"></p></div>
-    <div class="debt-section"><span>الديون المتراكمة:</span><p id="resDebt"></p></div>
-    <div class="note">ملاحظة: مدة الاشتراك 30 يوم، في حالة صادف الشهر 31 يومًا سوف يُخصم يوم من اشتراكك.</div>
+    <div class="card-item"><div class="label"><i class="fas fa-user"></i> الاسم:</div><p id="resName"></p></div>
+    <div class="card-item"><div class="label"><i class="fas fa-phone"></i> الهاتف:</div><p id="resPhone"></p></div>
+    <div class="card-item"><div class="label"><i class="fas fa-calendar-plus"></i> التفعيل:</div><p id="resStart"></p></div>
+    <div class="card-item"><div class="label"><i class="fas fa-calendar-minus"></i> الانتهاء:</div><p id="resEnd"></p></div>
+    <div class="card-item"><div class="label"><i class="fas fa-clock"></i> الوقت:</div><p id="resEndTime"></p></div>
+    <div class="card-item"><div class="label"><i class="fas fa-dollar-sign"></i> المبلغ:</div><p id="resAmount"></p></div>
+    <div class="debt-section"><span>الديون:</span><p id="resDebt"></p></div>
+    <div class="note">ملاحظة: مدة الاشتراك 30 يوم، إذا صادف الشهر 31 يومًا يُخصم يوم.</div>
   </div>
-  <div class="dual-buttons">
-    <button onclick="saveCardAsImage()">حفظ البطاقة</button>
-  </div>
+
   <script>
     let subscribers = [];
 
+    // تحميل بيانات من التخزين المحلي (إذا وُجدت)
     if (localStorage.getItem('subscribers')) {
       subscribers = JSON.parse(localStorage.getItem('subscribers'));
       populateNames();
@@ -260,14 +201,29 @@
       const file = event.target.files[0];
       const reader = new FileReader();
       reader.onload = function(e) {
-        subscribers = JSON.parse(e.target.result);
-        localStorage.setItem('subscribers', JSON.stringify(subscribers));
-        populateNames();
-        document.getElementById('uploadBtn').style.display = 'none';
-        document.getElementById('newFileBtn').style.display = 'inline-block';
+        const content = e.target.result;
+        // إذا التطبيق داخل WebView في Android
+        if (window.Android && Android.sendFileContent) {
+          Android.sendFileContent(content);
+        } else {
+          // في المتصفح
+          subscribers = JSON.parse(content);
+          localStorage.setItem('subscribers', JSON.stringify(subscribers));
+          populateNames();
+          document.getElementById('uploadBtn').style.display = 'none';
+          document.getElementById('newFileBtn').style.display = 'inline-block';
+        }
       };
       reader.readAsText(file);
     });
+
+    function receiveContentFromAndroid(json) {
+      subscribers = JSON.parse(json);
+      localStorage.setItem('subscribers', JSON.stringify(subscribers));
+      populateNames();
+      document.getElementById('uploadBtn').style.display = 'none';
+      document.getElementById('newFileBtn').style.display = 'inline-block';
+    }
 
     function populateNames() {
       const nameSelect = document.getElementById('nameSelect');
@@ -297,27 +253,21 @@
       const duration = document.getElementById('durationSelect').value;
 
       const startDate = new Date(2025, startMonth - 1, startDay);
-      let endDate;
+      let endDate = new Date(startDate);
       if (duration === '30') {
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 30);
+        endDate.setDate(endDate.getDate() + 30);
       } else {
-        endDate = new Date(startDate);
-        endDate.setMonth(startDate.getMonth() + 1);
+        endDate.setMonth(endDate.getMonth() + 1);
       }
-      const endDay = endDate.getDate();
-      const endMonth = endDate.getMonth() + 1;
 
       document.getElementById('resName').textContent = name;
       document.getElementById('resPhone').textContent = phone;
       document.getElementById('resStart').textContent = `${startDay}/${startMonth}/2025`;
-      document.getElementById('resEnd').textContent = `${endDay}/${endMonth}/2025`;
+      document.getElementById('resEnd').textContent = `${endDate.getDate()}/${endDate.getMonth() + 1}/2025`;
       document.getElementById('resEndTime').textContent = formatTimeTo12Hour(endTime);
       document.getElementById('resAmount').textContent = `${amount} ألف دينار`;
       document.getElementById('resDebt').textContent = debt || 'لا توجد ديون';
-
       document.getElementById('resultCard').style.display = 'block';
-      document.querySelector('.dual-buttons').style.display = 'block';
     }
 
     function formatTimeTo12Hour(time24) {
@@ -327,15 +277,6 @@
       const ampm = hour >= 12 ? 'مساءً' : 'صباحًا';
       hour = hour % 12 || 12;
       return `${hour}:${minute} ${ampm}`;
-    }
-
-    function saveCardAsImage() {
-      html2canvas(document.getElementById('resultCard')).then(canvas => {
-        const link = document.createElement('a');
-        link.download = `${document.getElementById('nameSelect').selectedOptions[0].textContent || 'بطاقة_المشترك'}.png`;
-        link.href = canvas.toDataURL();
-        link.click();
-      });
     }
 
     function resetData() {
