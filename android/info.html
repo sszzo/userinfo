@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* نفس تنسيقاتك السابقة بالكامل بدون تغيير */
     body {
       font-family: 'Cairo', sans-serif;
       background-color: #e9f5ec;
@@ -131,8 +130,8 @@
   <div class="container">
     <h2>ادخال معلومات المشترك</h2>
     <div id="fileInputWrapper">
-      <input type="file" id="jsonFile" accept=".json" hidden>
-      <label for="jsonFile" class="custom-upload-btn" id="uploadBtn"><i class="fas fa-upload"></i> اختر ملف المعلومات</label>
+      <input type="file" id="fileInput" accept=".json" hidden>
+      <label for="fileInput" class="custom-upload-btn" id="uploadBtn"><i class="fas fa-upload"></i> اختر ملف المعلومات</label>
       <button onclick="resetData()" id="newFileBtn" class="custom-upload-btn" style="display: none; background-color:#a94442"><i class="fas fa-sync-alt"></i> ملف جديد</button>
     </div>
     <label>اسم المشترك:
@@ -189,7 +188,6 @@
   <script>
     let subscribers = [];
 
-    // تحميل بيانات من التخزين المحلي (إذا وُجدت)
     if (localStorage.getItem('subscribers')) {
       subscribers = JSON.parse(localStorage.getItem('subscribers'));
       populateNames();
@@ -197,16 +195,20 @@
       document.getElementById('newFileBtn').style.display = 'inline-block';
     }
 
-    document.getElementById('jsonFile').addEventListener('change', function(event) {
-      const file = event.target.files[0];
+    document.getElementById("fileInput").addEventListener("change", loadJSONFile);
+
+    function loadJSONFile() {
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
+      if (!file) return;
+
       const reader = new FileReader();
       reader.onload = function(e) {
         const content = e.target.result;
-        // إذا التطبيق داخل WebView في Android
+
         if (window.Android && Android.sendFileContent) {
           Android.sendFileContent(content);
         } else {
-          // في المتصفح
           subscribers = JSON.parse(content);
           localStorage.setItem('subscribers', JSON.stringify(subscribers));
           populateNames();
@@ -215,7 +217,7 @@
         }
       };
       reader.readAsText(file);
-    });
+    }
 
     function receiveContentFromAndroid(json) {
       subscribers = JSON.parse(json);
@@ -286,4 +288,4 @@
     }
   </script>
 </body>
-  </html>
+</html>
