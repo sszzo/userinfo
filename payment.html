@@ -6,7 +6,7 @@
   <title>بطاقة تسديد</title>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -24,11 +24,11 @@
     }
     .container {
       background-color: #ffffff;
-      padding: 30px;
+      padding: 20px;
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       width: 90%;
-      max-width: 500px;
+      max-width: 400px;
     }
     h2 {
       text-align: center;
@@ -66,14 +66,13 @@
       box-shadow: 0 4px 12px rgba(44, 110, 73, 0.2);
       padding: 20px;
       width: 90%;
-      max-width: 500px;
+      max-width: 400px;
       margin-top: 30px;
       position: relative;
       border: 1px solid #b0bec5;
-      text-align: center;
     }
-    .card .check-icon {
-      font-size: 50px;
+    .card h3 {
+      text-align: center;
       color: #2c6e49;
       margin-bottom: 20px;
     }
@@ -81,22 +80,36 @@
       background-color: #f6fdf9;
       border: 1px solid #c8e6c9;
       border-radius: 10px;
-      padding: 12px 16px;
+      padding: 10px 12px;
       margin: 10px 0;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       text-align: right;
       direction: rtl;
+      gap: 10px;
+    }
+    .info-card .material-icons {
+      color: #2c6e49;
+      font-size: 22px;
+      margin-left: 5px;
     }
     .info-card .label {
       color: #2c6e49;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 15px;
+      flex: 1;
+      white-space: nowrap;
     }
     .info-card .value {
       color: #37474f;
-      font-size: 16px;
+      font-size: 15px;
+      flex: 2;
+      text-align: left;
+    }
+    .debt-card {
+      background-color: #fff3cd;
+      border: 1px solid #ffecb5;
     }
     #saveImageBtn {
       display: none;
@@ -109,7 +122,7 @@
       font-size: 16px;
       cursor: pointer;
       width: 90%;
-      max-width: 500px;
+      max-width: 400px;
     }
   </style>
 </head>
@@ -128,41 +141,41 @@
         <input type="number" id="startMonth" placeholder="الشهر">
       </div>
     </label>
-    <label>مبلغ الاشتراك:
-      <select id="amount">
-        <option value="30">30</option>
-        <option value="35">35</option>
-        <option value="40">40</option>
-        <option value="45">45</option>
-        <option value="50">50</option>
-        <option value="60">60</option>
-        <option value="70">70</option>
-        <option value="100">100</option>
-      </select>
+    <label>المبلغ المسدد:
+      <input type="number" id="amountInput" placeholder="أدخل المبلغ">
+    </label>
+    <label>المبلغ المتبقي:
+      <input type="number" id="debtInput" placeholder="اتركه فارغ اذا كان لايوجد ديون">
     </label>
     <button onclick="displayData()">عرض البطاقة</button>
   </div>
 
   <div class="card" id="resultCard">
-    <div class="check-icon">
-      <i class="fas fa-check-circle"></i>
-    </div>
     <h3>تم التسديد بنجاح</h3>
     <div class="info-card">
-      <span class="label">الاسم</span>
+      <i class="material-icons">person</i>
+      <span class="label">الاســـــــــم:</span>
       <span id="resName" class="value"></span>
     </div>
     <div class="info-card">
-      <span class="label">رقم الهاتف</span>
+      <i class="material-icons">phone</i>
+      <span class="label">رقم الهاتف:</span>
       <span id="resPhone" class="value"></span>
     </div>
     <div class="info-card">
-      <span class="label">تاريخ التسديد</span>
+      <i class="material-icons">calendar_today</i>
+      <span class="label">تاريخ التسديد:</span>
       <span id="resStart" class="value"></span>
     </div>
     <div class="info-card">
-      <span class="label">المبلغ المسدد</span>
+      <i class="material-icons">payments</i>
+      <span class="label">المبلغ المسدد:</span>
       <span id="resAmount" class="value"></span>
+    </div>
+    <div class="info-card debt-card" id="debtCard" style="display: none;">
+      <i class="material-icons">warning</i>
+      <span class="label">الدين المتبقي:</span>
+      <span id="resDebt" class="value"></span>
     </div>
   </div>
 
@@ -198,12 +211,20 @@
       const phone = document.getElementById('phone').value;
       const startDay = parseInt(document.getElementById('startDay').value);
       const startMonth = parseInt(document.getElementById('startMonth').value);
-      const amount = document.getElementById('amount').value;
+      const amount = document.getElementById('amountInput').value;
+      const debt = document.getElementById('debtInput').value;
 
       document.getElementById('resName').textContent = name;
       document.getElementById('resPhone').textContent = phone;
       document.getElementById('resStart').textContent = `${startDay}/${startMonth}/2025`;
       document.getElementById('resAmount').textContent = `${amount} ألف دينار`;
+
+      if (debt && debt.trim() !== '') {
+        document.getElementById('resDebt').textContent = `${debt} ألف دينار`;
+        document.getElementById('debtCard').style.display = 'flex';
+      } else {
+        document.getElementById('debtCard').style.display = 'none';
+      }
 
       document.getElementById('resultCard').style.display = 'block';
       document.getElementById('saveImageBtn').style.display = 'block';
