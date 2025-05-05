@@ -13,7 +13,7 @@
     }
     body {
       font-family: 'Cairo', sans-serif;
-      background-color: #e9f5ec;
+      background-color: #F0F8FF;
       margin: 0;
       padding: 20px;
       display: flex;
@@ -23,62 +23,68 @@
       min-height: 100vh;
     }
     .container {
-      background-color: #ffffff;
+      background-color: #FFFFFF;
       padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       width: 90%;
       max-width: 400px;
+      border: 2px solid #4682B4;
     }
     h2 {
       text-align: center;
       margin-bottom: 20px;
-      color: #2c6e49;
+      color: #4682B4;
+      font-weight: bold;
     }
     label {
       display: block;
       margin-top: 15px;
       color: #333;
+      font-weight: 500;
     }
     input, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border: 1px solid #ced4da;
+      border: 1px solid #ccc;
       border-radius: 8px;
+      background-color: #f9f9f9;
       font-family: 'Cairo', sans-serif;
     }
-    button {
+    button, .icon-button {
       margin-top: 15px;
       padding: 12px;
-      background-color: #2c6e49;
-      color: white;
       border: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-      width: 100%;
+      width: 90%;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     .card {
       display: none;
-      background: linear-gradient(135deg, #f1f3f4, #ffffff);
+      background: #E6F1FF;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(44, 110, 73, 0.2);
+      box-shadow: 0 4px 16px rgba(70, 130, 180, 0.4);
       padding: 20px;
       width: 90%;
       max-width: 400px;
       margin-top: 30px;
-      position: relative;
-      border: 1px solid #b0bec5;
+      border: 2px solid #4682B4;
     }
     .card h3 {
       text-align: center;
-      color: #2c6e49;
+      color: #2C5F8A;
       margin-bottom: 20px;
     }
     .info-card {
-      background-color: #f6fdf9;
-      border: 1px solid #c8e6c9;
+      background-color: #DCEEFF;
+      border: 1px solid #4682B4;
       border-radius: 10px;
       padding: 10px 12px;
       margin: 10px 0;
@@ -90,39 +96,47 @@
       gap: 10px;
     }
     .info-card .material-icons {
-      color: #2c6e49;
+      color: #4682B4;
       font-size: 22px;
       margin-left: 5px;
     }
     .info-card .label {
-      color: #2c6e49;
+      color: #2C5F8A;
       font-weight: bold;
       font-size: 15px;
       flex: 1;
       white-space: nowrap;
     }
     .info-card .value {
-      color: #37474f;
+      color: #333;
       font-size: 15px;
       flex: 2;
       text-align: left;
     }
     .debt-card {
-      background-color: #fff3cd;
-      border: 1px solid #ffecb5;
+      background-color: #fef4f4;
+      border: 1px solid #f08080;
     }
-    #saveImageBtn {
+    #saveImageBtn, #whatsappBtn {
       display: none;
-      margin-top: 15px;
-      padding: 12px;
-      background-color: #14532d;
+    }
+    .icon-button.save {
+      background: linear-gradient(45deg, #4682B4, #5F9EA0);
       color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      width: 90%;
-      max-width: 400px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(70, 130, 180, 0.3);
+    }
+    .icon-button.whatsapp {
+      background: linear-gradient(45deg, #128c7e, #25d366);
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(18, 140, 126, 0.3);
+    }
+    .icon-button.show {
+      background-color: #4682B4;
+      color: white;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
 </head>
@@ -145,9 +159,12 @@
       <input type="number" id="amountInput" placeholder="أدخل المبلغ">
     </label>
     <label>المبلغ المتبقي:
-      <input type="number" id="debtInput" placeholder="اتركه فارغ اذا كان لايوجد ديون">
+      <input type="number" id="debtInput" placeholder="اتركه فارغ إذا لايوجد ديون">
     </label>
-    <button onclick="displayData()">عرض البطاقة</button>
+    <button class="icon-button show" onclick="displayData()">
+      <span class="material-icons">visibility</span>
+      عرض البطاقة
+    </button>
   </div>
 
   <div class="card" id="resultCard">
@@ -179,7 +196,14 @@
     </div>
   </div>
 
-  <button id="saveImageBtn" onclick="saveCardAsImage()">حفظ البطاقة</button>
+  <button id="saveImageBtn" class="icon-button save" onclick="saveCardAsImage()">
+    <span class="material-icons">save_alt</span>
+    حفظ البطاقة
+  </button>
+  <button id="whatsappBtn" class="icon-button whatsapp" onclick="shareOnWhatsapp()">
+    <span class="material-icons">share</span>
+    مشاركة عبر واتساب
+  </button>
 
   <script>
     let subscribers = [];
@@ -227,7 +251,8 @@
       }
 
       document.getElementById('resultCard').style.display = 'block';
-      document.getElementById('saveImageBtn').style.display = 'block';
+      document.getElementById('saveImageBtn').style.display = 'flex';
+      document.getElementById('whatsappBtn').style.display = 'flex';
     }
 
     function saveCardAsImage() {
@@ -236,6 +261,22 @@
         link.download = `${document.getElementById('nameSelect').selectedOptions[0].textContent || 'بطاقة_التسديد'}.png`;
         link.href = canvas.toDataURL();
         link.click();
+      });
+    }
+
+    function shareOnWhatsapp() {
+      const phone = document.getElementById('phone').value;
+      const formattedPhone = `+964${phone.replace(/^0/, '')}`;
+      const message = encodeURIComponent("تم التسديد بنجاح");
+      const whatsappUrl = `https://wa.me/${formattedPhone}?text=${message}`;
+
+      html2canvas(document.getElementById('resultCard')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `${document.getElementById('nameSelect').selectedOptions[0].textContent || 'بطاقة_التسديد'}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+
+        window.open(whatsappUrl, '_blank');
       });
     }
   </script>
