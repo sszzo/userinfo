@@ -30,13 +30,23 @@ const makePageFunctions = {
   },
 
   formatPhoneNumber: function(event) {
-    let value = event.target.value.replace(/\s+/g, 	c); // Remove spaces
-    // Normalize Iraqi numbers: remove +964 or 00964, ensure it starts with 07
+    let value = event.target.value;
+
+    // إزالة جميع الفراغات
+    value = value.replace(/\s+/g, "");
+
+    // إزالة +964 أو 00964 واستبدالها بـ 0 في البداية
     value = value.replace(/^(\+964|00964)/, "0");
+
+    // إضافة 0 في البداية إذا بدأ الرقم بـ 7 ولم يبدأ بـ 07
     if (value.startsWith("7") && !value.startsWith("07")) {
-        value = "0" + value;
+      value = "0" + value;
     }
-    event.target.value = value.replace(/[^0-9]/g, ""); // Allow only numbers
+
+    // السماح فقط للأرقام
+    value = value.replace(/[^0-9]/g, "");
+
+    event.target.value = value;
   },
 
   handleAddEntry: function(event) {
@@ -220,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
   opacity: 0.7;
 }
 .btn-edit {
-  color: #28a745; 
+  color: #28a745;
 }
 .btn-delete {
   color: #dc3545;
@@ -230,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
     margin-top: 15px;
     border-radius: 5px;
     text-align: center;
-    display: none; 
+    display: none;
 }
 .ui-message.success {
     background-color: #d4edda;
