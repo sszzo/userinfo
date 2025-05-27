@@ -1,19 +1,15 @@
 const CACHE_NAME = 'user-info-cache-v1'; // اسم ذاكرة التخزين المؤقت
 const FILES_TO_CACHE = [
-  'https://sszzo.github.io/userinfo/',         // للصفحة الرئيسية
-  'https://sszzo.github.io/userinfo/index.html',
-  'https://sszzo.github.io/userinfo/mony.html',
-  'https://sszzo.github.io/userinfo/info.html',
-  'https://sszzo.github.io/userinfo/payment.html',
-  'https://sszzo.github.io/userinfo/make.html',
-  'https://sszzo.github.io/userinfo/manifest.json',
-  // إذا كان لديك ملف CSS:
-  // 'https://sszzo.github.io/userinfo/css/style.css',
-  // إذا كان لديك ملف JS:
-  // 'https://sszzo.github.io/userinfo/js/main.js',
-  // إذا كانت أيقونات manifest في مجلد 'img':
-  // 'https://sszzo.github.io/userinfo/img/192.png',
-  // 'https://sszzo.github.io/userinfo/img/512.png'
+  '/userinfo/', // للصفحة الرئيسية
+  '/index.html',
+  '/mony.html',
+  '/info.html',
+  '/payment.html',
+  '/make.html',
+  '/manifest.json',
+  // يمكنك إضافة مسارات الأيقونات إذا كنت تريد تخزينها مؤقتًا
+  // 'https://raw.githubusercontent.com/sszzo/userinfo/refs/heads/main/img/192.png',
+  // 'https://raw.githubusercontent.com/sszzo/userinfo/refs/heads/main/img/512.png'
 ];
 
 self.addEventListener('install', function(event) {
@@ -49,7 +45,7 @@ self.addEventListener('fetch', function(event) {
         .catch(() => {
           return caches.open(CACHE_NAME)
             .then((cache) => {
-              return cache.match('https://sszzo.github.io/userinfo/index.html'); // استخدام الرابط الكامل
+              return cache.match('index.html'); // عرض الصفحة الرئيسية من ذاكرة التخزين المؤقت عند عدم الاتصال
             });
         })
     );
