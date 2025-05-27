@@ -1,217 +1,49 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>انشاء ملف معلومات</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-    }
-
-    body {
-      background: #f2f4f8;
-      padding: 20px;
-      direction: rtl;
-    }
-
-    .container {
-      max-width: 100%;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    }
-
-    h2 {
-      margin-bottom: 15px;
-      color: #333;
-      text-align: center;
-      font-size: 22px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    input:focus {
-      border-color: #007bff;
-      outline: none;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      color: white;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .add-btn {
-      background-color: #2c6e49;
-    }
-    .add-btn:hover {
-      background-color: #14532d;
-    }
-
-    .file-btn {
-      background-color: #007bff;
-    }
-    .file-btn:hover {
-      background-color: #0056b3;
-    }
-
-    .download-btn {
-      background-color: #f59e0b;
-    }
-    .download-btn:hover {
-      background-color: #d97706;
-    }
-
-    ul {
-      margin-top: 20px;
-      padding: 0;
-      list-style: none;
-    }
-
-    li {
-      background: #ffffff;
-      border: 1px solid #e0e0e0;
-      margin-bottom: 12px;
-      padding: 12px 16px;
-      border-radius: 10px;
-      color: #333;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    }
-
-    .contact-name {
-      font-weight: bold;
-      font-size: 17px;
-      margin-bottom: 6px;
-      color: #007bff;
-    }
-
-    .contact-phone {
-      font-size: 15px;
-      color: #666;
-    }
-
-    .file-input-wrapper {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      margin-bottom: 12px;
-    }
-
-    .file-input-wrapper input[type="file"] {
-      opacity: 0;
-      position: absolute;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-    }
-
-    @media (min-width: 600px) {
-      .container {
-        max-width: 400px;
-      }
-    }
-  </style>
+  <title>انشاء ملف معلومات المشتركين</title>
+  <link rel="stylesheet" href="./css/style_make.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons if needed, or use SVGs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script> <!-- FileSaver for downloading JSON -->
 </head>
-<body>
-  <div class="container">
-    <h2>انشاء ملف معلومات</h2>
-    <input type="text" id="name" placeholder="الاسم">
-    <input type="text" id="phone" placeholder="رقم الهاتف">
-    <button class="add-btn" onclick="addEntry()">إضافة</button>
+<body style="background-color: #f2f4f8;">
+  <div class="container" style="max-width: 500px;">
+    <h2 style="text-align: center; margin-bottom: 20px; color: #333; font-size: 22px;">انشاء وتعديل ملف معلومات المشتركين</h2>
 
-    <div class="file-input-wrapper">
-      <input type="file" id="fileInput" accept=".json" onchange="loadJSONFile()">
-      <button class="file-btn" onclick="document.getElementById('fileInput').click()">اختيار ملف لاضافة اليه معلومات</button>
+    <form id="addEntryForm">
+      <div>
+        <label for="subscriberName">اسم المشترك:</label>
+        <input type="text" id="subscriberName" placeholder="الاسم" required>
+      </div>
+      <div>
+        <label for="subscriberPhone">رقم الهاتف:</label>
+        <input type="text" id="subscriberPhone" placeholder="رقم الهاتف (مثال: 07xxxxxxxxx)" required>
+      </div>
+      <button type="submit" class="btn" style="background-color: #2c6e49; width:100%;">إضافة مشترك</button>
+    </form>
+
+    <div style="margin-top: 20px; margin-bottom: 20px;">
+      <input type="file" id="fileInput" accept=".json" hidden>
+      <button type="button" class="btn custom-upload-btn" style="background-color: #007bff;" onclick="document.getElementById('fileInput').click()"><i class="fas fa-folder-open"></i> اختيار ملف JSON لتحميله أو الإضافة إليه</button>
     </div>
-    
-    <button class="download-btn" onclick="downloadJSON()">تنزيل الملف</button>
 
-    <ul id="list"></ul>
+    <button type="button" class="btn" style="background-color: #f59e0b; width:100%; margin-bottom:20px;" onclick="makePageFunctions.downloadSubscribersJSON()"><i class="fas fa-download"></i> تنزيل ملف معلومات المشتركين (JSON)</button>
+
+    <h3>قائمة المشتركين الحالية:</h3>
+    <ul id="subscribersList" class="make-list"></ul>
+    <div id="form-message" class="ui-message" style="margin-top: 15px; text-align:center;"></div>
+
   </div>
 
-  <script>
-    let data = [];
+  <div id="global-message" class="ui-message" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index:1000;"></div>
 
-    document.getElementById("phone").addEventListener("input", function () {
-      let value = this.value.replace(/\s+/g, '').replace(/^(\+964|00964)/, '0');
-      this.value = value;
-    });
-
-    function addEntry() {
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value;
-
-      if (name && phone) {
-        data.push({ name, phone });
-        updateList();
-        document.getElementById("name").value = "";
-        document.getElementById("phone").value = "";
-      } else {
-        alert("يرجى إدخال الاسم ورقم الهاتف");
-      }
-    }
-
-    function updateList() {
-      const list = document.getElementById("list");
-      list.innerHTML = "";
-      data.forEach((item) => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <div class="contact-name">${item.name}</div>
-          <div class="contact-phone">${item.phone}</div>
-        `;
-        list.appendChild(li);
-      });
-    }
-
-    function loadJSONFile() {
-      const fileInput = document.getElementById("fileInput");
-      const file = fileInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          try {
-            const importedData = JSON.parse(e.target.result);
-            if (Array.isArray(importedData)) {
-              data = data.concat(importedData);
-              updateList();
-              alert("تم تحميل البيانات من الملف بنجاح");
-            } else {
-              alert("الملف غير صالح. تأكد أنه ملف JSON يحتوي على قائمة من الأسماء والأرقام.");
-            }
-          } catch (err) {
-            alert("حدث خطأ أثناء قراءة الملف.");
-          }
-        };
-        reader.readAsText(file);
-      }
-    }
-
-    function downloadJSON() {
-      const jsonStr = JSON.stringify(data, null, 2);
-      const blob = new Blob([jsonStr], { type: "application/json;charset=utf-8" });
-      saveAs(blob, "معلومات المشتركين.json");
-    }
-  </script>
+  <script src="./js/main_script.js"></script>
+  <script src="./js/make_page.js"></script>
 </body>
 </html>
