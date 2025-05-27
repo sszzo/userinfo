@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>الصفحة الرئيسية</title>
+  <link rel="manifest" href="manifest.json">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
@@ -97,14 +98,67 @@
     }
   </style>
 </head>
+
+
 <body>
   <div class="card">
     <a href="info.html" class="btn">بطاقة معلومات</a>
     <a href="payment.html" class="btn">بطاقة تسديد</a>
+    <a href="mony.html" class="btn">ديون المشتركين</a>
     <a href="make.html" class="btn">انشاء ملف معلومات</a>
+    <button id="installApp" class="btn" style="background: linear-gradient(90deg, #3498db, #2980b9);">تثبيت التطبيق</button>
     <div class="footer">
       <span class="badge">المطور: صفوان جمعه</span>
     </div>
   </div>
+
+  <script>
+    let deferredPrompt;
+    const installButton = document.getElementById('installApp');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      console.log('beforeinstallprompt fired');
+      // منع ظهور مطالبة التثبيت التلقائية
+      e.preventDefault();
+      deferredPrompt = e;
+      // إظهار الزر فقط إذا كان `beforeinstallprompt` مدعومًا
+      installButton.style.display = 'block';
+    });
+
+    installButton.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        // إظهار مطالبة التثبيت
+        deferredPrompt.prompt();
+        // انتظر حتى يختار المستخدم
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User choice: ${outcome}`);
+        // إعادة تعيين المتغير إلى null لأنه تم استخدامه
+        deferredPrompt = null;
+        // إخفاء الزر بعد النقر
+        installButton.style.display = 'none';
+      } else {
+        // إذا لم يتم حفظ `deferredPrompt` (ربما ليس PWA مؤهلًا أو تم رفض المطالبة بالفعل)
+        alert('لا يمكن تثبيت التطبيق حاليًا.');
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('App installed');
+      // إخفاء الزر بعد التثبيت
+      installButton.style.display = 'none';
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function(registration) {
+            console.log('ServiceWorker registered with scope:', registration.scope);
+          })
+          .catch(function(error) {
+            console.log('ServiceWorker registration failed:', error);
+          });
+      });
+    }
+  </script>
 </body>
 </html>
