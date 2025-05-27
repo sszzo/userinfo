@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>انشاء ملف معلومات</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -59,7 +60,6 @@
       transition: 0.3s;
     }
 
-    /* زر الإضافة */
     .add-btn {
       background-color: #2c6e49;
     }
@@ -67,7 +67,6 @@
       background-color: #14532d;
     }
 
-    /* زر اختيار ملف */
     .file-btn {
       background-color: #007bff;
     }
@@ -75,7 +74,6 @@
       background-color: #0056b3;
     }
 
-    /* زر تحميل الملف */
     .download-btn {
       background-color: #f59e0b;
     }
@@ -211,30 +209,9 @@
 
     function downloadJSON() {
       const jsonStr = JSON.stringify(data, null, 2);
-      const blob = new Blob([jsonStr], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "ملف المعلومات.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      const blob = new Blob([jsonStr], { type: "application/json;charset=utf-8" });
+      saveAs(blob, "معلومات المشتركين.json");
     }
-function interceptBlobDownload(blob, fileName) {
-  const reader = new FileReader();
-  reader.onloadend = function () {
-    if (window.AndroidDownloader) {
-      AndroidDownloader.downloadBlob(reader.result, fileName);
-    }
-  };
-  reader.readAsDataURL(blob);
-}
-const originalCreateObjectURL = URL.createObjectURL;
-URL.createObjectURL = function(blob) {
-  interceptBlobDownload(blob, 'downloaded_file.json');
-  return originalCreateObjectURL.call(URL, blob);
-};
   </script>
 </body>
 </html>
