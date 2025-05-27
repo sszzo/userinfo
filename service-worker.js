@@ -1,19 +1,19 @@
 const CACHE_NAME = 'user-info-cache-v1'; // اسم ذاكرة التخزين المؤقت
 const FILES_TO_CACHE = [
   'https://sszzo.github.io/userinfo/',         // للصفحة الرئيسية
-  'index.html',
-  'mony.html',
-  'info.html',
-  'payment.html',
-  'make.html',
-  'manifest.json',
+  'https://sszzo.github.io/userinfo/index.html',
+  'https://sszzo.github.io/userinfo/mony.html',
+  'https://sszzo.github.io/userinfo/info.html',
+  'https://sszzo.github.io/userinfo/payment.html',
+  'https://sszzo.github.io/userinfo/make.html',
+  'https://sszzo.github.io/userinfo/manifest.json',
   // إذا كان لديك ملف CSS:
   // 'https://sszzo.github.io/userinfo/css/style.css',
   // إذا كان لديك ملف JS:
   // 'https://sszzo.github.io/userinfo/js/main.js',
   // إذا كانت أيقونات manifest في مجلد 'img':
-  // 'img/192.png',
-  // 'img/512.png'
+  // 'https://sszzo.github.io/userinfo/img/192.png',
+  // 'https://sszzo.github.io/userinfo/img/512.png'
 ];
 
 self.addEventListener('install', function(event) {
@@ -57,12 +57,12 @@ self.addEventListener('fetch', function(event) {
     event.respondWith(
       caches.match(event.request)
         .then(function(response) {
-
+          // الكائن المستجيب موجود في ذاكرة التخزين المؤقت - قم بإرجاعه.
           if (response) {
             return response;
           }
 
-
+          // لم يتم العثور على الكائن المستجيب في ذاكرة التخزين المؤقت - قم بجلب مورد جديد من الشبكة.
           return fetch(event.request).then(
             function(response) {
               if (!response || response.status !== 200 || response.type !== 'basic') {
