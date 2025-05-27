@@ -2,7 +2,7 @@
   "name": "معلومات المشتركين",
   "short_name": "معلومات المشتركين",
   "description": "",
-  "start_url": "/",
+  "start_url": "/userinfo/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
