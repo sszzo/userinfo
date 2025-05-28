@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شرح التطبيق</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .video-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 400px; /* عرض مناسب للفيديو العمودي */
+            width: 95%;
+        }
+
+        .video-player {
+            width: 100%;
+            display: block; /* لمنع وجود مسافات أسفل الفيديو */
+            border-radius: 15px 15px 0 0;
+        }
+
+        .video-controls {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .video-controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .video-controls button:focus {
+            outline: none;
+        }
+
+        .progress-bar-container {
+            flex-grow: 1;
+            margin: 0 15px;
+            background-color: #555;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            background-color: #007bff;
+            height: 8px;
+            width: 0%;
+            border-radius: 5px;
+        }
+
+        .time-display {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="appVideo" class="video-player" controls poster="ضع رابط صورة الملصق هنا (اختياري)">
+            <source src="https://raw.githubusercontent.com/sszzo/userinfo/refs/heads/main/video/1.mp4" type="video/mp4">
+            متصفحك لا يدعم تشغيل الفيديو.
+        </video>
+        </div>
+
+    <script>
+        // كود JavaScript اختياري لتخصيص عناصر التحكم
+        const video = document.getElementById('appVideo');
+        // const playPauseBtn = document.getElementById('playPauseBtn');
+        // const progressBarContainer = document.querySelector('.progress-bar-container');
+        // const progressBar = document.getElementById('progressBar');
+        // const currentTimeDisplay = document.getElementById('currentTime');
+        // const durationDisplay = document.getElementById('duration');
+        // const muteBtn = document.getElementById('muteBtn');
+        // const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        // // دالة لتحديث زر التشغيل/الإيقاف
+        // function updatePlayPauseButton() {
+        //     const icon = video.paused ? 'play_arrow' : 'pause';
+        //     playPauseBtn.innerHTML = `<span class="material-icons">${icon}</span>`;
+        // }
+
+        // // حدث تشغيل/إيقاف الفيديو
+        // playPauseBtn.addEventListener('click', () => {
+        //     if (video.paused || video.ended) {
+        //         video.play();
+        //     } else {
+        //         video.pause();
+        //     }
+        //     updatePlayPauseButton();
+        // });
+
+        // // تحديث شريط التقدم والوقت
+        // video.addEventListener('timeupdate', () => {
+        //     const percentage = (video.currentTime / video.duration) * 100;
+        //     progressBar.style.width = `${percentage}%`;
+        //     currentTimeDisplay.textContent = formatTime(video.currentTime);
+        // });
+
+        // // الحصول على مدة الفيديو عند تحميل البيانات الوصفية
+        // video.addEventListener('loadedmetadata', () => {
+        //     durationDisplay.textContent = formatTime(video.duration);
+        // });
+
+        // // النقر على شريط التقدم للانتقال إلى جزء معين من الفيديو
+        // progressBarContainer.addEventListener('click', (e) => {
+        //     const clickPosition = e.offsetX / progressBarContainer.offsetWidth;
+        //     video.currentTime = clickPosition * video.duration;
+        // });
+
+        // // كتم/إلغاء كتم الصوت
+        // muteBtn.addEventListener('click', () => {
+        //     video.muted = !video.muted;
+        //     const icon = video.muted ? 'volume_off' : 'volume_up';
+        //     muteBtn.innerHTML = `<span class="material-icons">${icon}</span>`;
+        // });
+
+        // // تفعيل/إلغاء وضع ملء الشاشة
+        // fullscreenBtn.addEventListener('click', () => {
+        //     if (video.requestFullscreen) {
+        //         video.requestFullscreen();
+        //     } else if (video.mozRequestFullScreen) { // Firefox
+        //         video.mozRequestFullScreen();
+        //     } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        //         video.webkitRequestFullscreen();
+        //     } else if (video.msRequestFullscreen) { // IE/Edge
+        //         video.msRequestFullscreen();
+        //     }
+        //     const icon = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement ? 'fullscreen_exit' : 'fullscreen';
+        //     fullscreenBtn.innerHTML = `<span class="material-icons">${icon}</span>`;
+        // });
+
+        // // دالة لتنسيق الوقت (ثواني إلى دقائق:ثواني)
+        // function formatTime(seconds) {
+        //     const minutes = Math.floor(seconds / 60);
+        //     const remainingSeconds = Math.floor(seconds % 60).toString().padStart(2, '0');
+        //     return `${minutes}:${remainingSeconds}`;
+        // }
+    </script>
+</body>
+</html>
