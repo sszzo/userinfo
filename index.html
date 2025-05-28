@@ -50,7 +50,6 @@
       font-size: 18px;
       font-weight: bold;
       color: white;
-      background: linear-gradient(90deg, #1abc9c, #16a085);
       border: none;
       border-radius: 12px;
       text-decoration: none;
@@ -60,6 +59,31 @@
     .btn:hover {
       transform: translateY(-3px);
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-info {
+      background: linear-gradient(90deg, #007bff, #0056b3); /* أزرق */
+    }
+
+    .btn-payment {
+      background: linear-gradient(90deg, #28a745, #1e7e34); /* أخضر */
+    }
+
+    .btn-debt {
+      background: linear-gradient(90deg, #dc3545, #c82333); /* أحمر */
+    }
+
+    .btn-create {
+      background: linear-gradient(90deg, #ffc107, #e0a800); /* أصفر */
+      color: #333; /* تغيير لون النص للأصفر ليكون واضحًا */
+    }
+
+    .btn-explanation {
+      background: linear-gradient(90deg, #6c757d, #545b62); /* رمادي */
+    }
+
+    .btn-install {
+      background: linear-gradient(90deg, #17a2b8, #138496); /* سماوي */
     }
 
     .footer {
@@ -102,11 +126,12 @@
 
 <body>
   <div class="card">
-    <a href="info.html" class="btn">بطاقة معلومات</a>
-    <a href="payment.html" class="btn">بطاقة تسديد</a>
-    <a href="mony.html" class="btn">ديون المشتركين</a>
-    <a href="make.html" class="btn">انشاء ملف معلومات</a>
-    <button id="installApp" class="btn" style="background: linear-gradient(90deg, #3498db, #2980b9);">تثبيت التطبيق</button>
+    <a href="info.html" class="btn btn-info">بطاقة معلومات</a>
+    <a href="payment.html" class="btn btn-payment">بطاقة تسديد</a>
+    <a href="mony.html" class="btn btn-debt">ديون المشتركين</a>
+    <a href="make.html" class="btn btn-create">انشاء ملف معلومات</a>
+    <a href="video.html" class="btn btn-explanation">شرح التطبيق</a>
+    <button id="installApp" class="btn btn-install">تثبيت التطبيق</button>
     <div class="footer">
       <span class="badge">المطور: صفوان جمعه</span>
     </div>
