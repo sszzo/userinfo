@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الديون</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-money-bill-wave"></i> إدارة الديون</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary" id="importBtn">
+                    <i class="fas fa-upload"></i> استيراد
+                </button>
+                <button class="btn btn-secondary" id="exportBtn">
+                    <i class="fas fa-download"></i> تصدير
+                </button>
+                <button class="btn btn-primary" id="addPersonBtn">
+                    <i class="fas fa-plus"></i> إضافة شخص
+                </button>
+            </div>
+        </header>
+
+        <div class="filters-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="البحث عن شخص...">
+            </div>
+            <div class="filter-controls">
+                <select id="sortBy">
+                    <option value="name">ترتيب حسب الاسم</option>
+                    <option value="totalDebt">ترتيب حسب إجمالي الدين</option>
+                    <option value="debtCount">ترتيب حسب عدد الديون</option>
+                </select>
+                <select id="sortOrder">
+                    <option value="asc">تصاعدي</option>
+                    <option value="desc">تنازلي</option>
+                </select>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-users"></i>
+                <h2>لا توجد ديون مسجلة</h2>
+                <p>ابدأ بإضافة أول شخص لتتبع ديونه</p>
+                <button class="btn btn-primary" onclick="openAddPersonModal()">
+                    <i class="fas fa-plus"></i> إضافة شخص جديد
+                </button>
+            </div>
+
+            <div class="table-container" id="tableContainer" style="display: none;">
+                <table class="people-table">
+                    <thead>
+                        <tr>
+                            <th>الاسم</th>
+                            <th>إجمالي الدين</th>
+                            <th>عدد الديون</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="peopleTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="addPersonModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة شخص جديد</h2>
+                <button class="close-btn" onclick="closeAddPersonModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addPersonForm">
+                <div class="form-group">
+                    <label for="personName">اسم الشخص</label>
+                    <input type="text" id="personName" required>
+                </div>
+                <div class="form-group">
+                    <label for="debtAmount">مبلغ الدين</label>
+                    <input type="number" id="debtAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="debtNote">ملاحظة الدين</label>
+                    <textarea id="debtNote" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddPersonModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">إضافة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="personDetailsModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="personDetailsTitle">تفاصيل ديون</h2>
+                <button class="close-btn" onclick="closePersonDetailsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="person-summary">
+                    <div class="summary-card">
+                        <h3>إجمالي الديون</h3>
+                        <span class="total-amount" id="totalDebtAmount">0</span>
+                    </div>
+                    <div class="summary-card">
+                        <h3>عدد الديون</h3>
+                        <span class="debt-count" id="debtCount">0</span>
+                    </div>
+                </div>
+                
+                <div class="debts-section">
+                    <div class="section-header">
+                        <h3>قائمة الديون</h3>
+                        <button class="btn btn-primary btn-sm" id="addDebtBtn">
+                            <i class="fas fa-plus"></i> إضافة دين جديد
+                        </button>
+                    </div>
+                    <div class="debts-list" id="debtsList">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addDebtModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة دين جديد</h2>
+                <button class="close-btn" onclick="closeAddDebtModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addDebtForm">
+                <div class="form-group">
+                    <label for="newDebtAmount">مبلغ الدين</label>
+                    <input type="number" id="newDebtAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="newDebtNote">ملاحظة الدين</label>
+                    <textarea id="newDebtNote" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddDebtModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">إضافة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="payOffDebtModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تسديد دين</h2>
+                <button class="close-btn" onclick="closePayOffDebtModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="payOffDebtForm">
+                <div class="form-group">
+                    <label for="payOffAmount">المبلغ المراد تسديده</label>
+                    <span id="payOffDebtInfo" style="font-size: 0.9em; color: #718096; display: block; margin-bottom: 5px;"></span>
+                    <input type="number" id="payOffAmount" step="0.01" required min="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="payOffNote">ملاحظة التسديد (اختياري)</label>
+                    <textarea id="payOffNote" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closePayOffDebtModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">تسديد</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display: none;">
+
+    <script src="script.js"></script>
+</body>
+</html>
