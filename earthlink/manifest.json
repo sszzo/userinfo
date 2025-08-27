@@ -1,0 +1,21 @@
+{
+  "name": "كشف حساب المشترك",
+  "short_name": "كشف حساب المشترك",
+  "description": "تطبيق ويب لإدارة معلومات المشتركين وتسديد الفواتير.",
+  "start_url": "/userinfo/earthlink/index.html",
+  "display": "standalone",
+  "background_color": "#e9f5ec",
+  "theme_color": "#2c6e49",
+  "icons": [
+    {
+      "src": "/userinfo/earthlink/img/x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/userinfo/earthlink/img/x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

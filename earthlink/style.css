@@ -1,0 +1,395 @@
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: #e9f5ec;
+  margin: 0;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.tab-buttons button {
+  background-color: #a9a9a9;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+.tab-buttons button.active-tab {
+  background-color: #2c6e49;
+}
+.container, .card {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 45%;
+  min-width: 300px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.card {
+    background: linear-gradient(135deg, #f1f3f4, #ffffff);
+    border: 1px solid #b0bec5;
+    margin-top: 20px;
+    font-size: 12px;
+    display: none;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c6e49;
+}
+label {
+  display: block;
+  margin-top: 15px;
+  color: #333;
+}
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+}
+button {
+  margin-top: 15px;
+  padding: 12px;
+  background-color: #2c6e49;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+input[type="text"], input[type="password"], input[type="number"] {
+  padding: 12px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.dual-buttons {
+  display: none;
+  margin-top: 15px;
+  padding: 12px;
+  background-color: #14532d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 90%;
+  max-width: 500px;
+}
+.dual-buttons button {
+  width: 100%;
+  margin: 0;
+  background-color: #14532d;
+}
+.card h3 {
+  text-align: center;
+  color: #2c6e49;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  border: 1px solid #cfd8dc;
+  padding: 6px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+.card-item .label {
+  display: flex;
+  align-items: center;
+  color: #37474f;
+  font-weight: bold;
+  font-size: 12px;
+}
+.card-item i {
+  color: #d4af37;
+  font-size: 13px;
+  margin-left: 6px;
+}
+.card-item p {
+  font-size: 12px;
+  color: #2c6e49;
+  margin: 0;
+  text-align: left;
+}
+.debt-section {
+  text-align: center;
+  margin-top: 8px;
+  background-color: #ffcdd2;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #e57373;
+  font-size: 12px;
+}
+.debt-section span {
+  font-weight: bold;
+  font-size: 13px;
+  color: #c62828;
+  display: block;
+}
+.debt-section p {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #b71c1c;
+}
+.note {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #555;
+}
+.custom-upload-btn {
+  display: inline-block;
+  padding: 12px;
+  background-color: #2c6e49;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+  width: 100%;
+}
+.custom-upload-btn:hover {
+  background-color: #1b4d36;
+}
+.custom-upload-btn i {
+  margin-left: 8px;
+  color: #f1c40f;
+}
+label input[type="time"], label input[type="number"], label select, label textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.icon-button.whatsapp {
+  background: linear-gradient(45deg, #128c7e, #25d366);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(18, 140, 126, 0.3);
+}
+.icon-button {
+  margin-top: 15px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.material-icons {
+  display: inline-flex;
+  vertical-align: middle;
+}
+.error-message {
+  color: #a94442;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+.single-button-container {
+  display: flex;
+  justify-content: center;
+  width: 45%;
+  min-width: 300px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
+}
+.single-button-container button {
+  background-color: #2c6e49;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+.single-button-container button:hover {
+  background-color: #1b4d36;
+}
+
+/* تنسيقات خاصة بصفحة التسديد وبطاقة التسديد */
+.payment-btn {
+  background-color: #1f77b4; /* لون أزرق لزر عرض البطاقة في صفحة التسديد */
+}
+.payment-btn:hover {
+  background-color: #145a8b;
+}
+.date-inputs {
+  display: flex;
+  gap: 10px;
+}
+.date-inputs input {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+/* تصميم بطاقة التسديد النهائية */
+.payment-result-card {
+  background-color: #e0f2f7; /* خلفية زرقاء فاتحة للبطاقة */
+  border: none; /* إزالة الحدود */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* ظل أكبر وأوضح */
+  padding: 25px;
+  border-radius: 20px; /* حواف أكثر دائرية */
+}
+
+.payment-result-card h3 {
+  color: #1f77b4; /* لون أزرق لعنوان "تم التسديد بنجاح" */
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.payment-card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 10px 15px;
+  border-radius: 12px; /* حواف دائرية للعناصر */
+  background-color: #ffffff; /* خلفية بيضاء للعناصر */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* ظل خفيف للعناصر */
+  border: 1px solid #cceeff; /* حدود زرقاء فاتحة */
+}
+
+.payment-card-item .label {
+  display: flex;
+  align-items: center;
+  color: #333333;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.payment-card-item i {
+  color: #1f77b4; /* لون أزرق للأيقونات داخل البطاقة */
+  font-size: 16px;
+  margin-left: 8px;
+}
+
+.payment-card-item p {
+  font-size: 14px;
+  color: #000000; /* لون أسود للنص */
+  margin: 0;
+  text-align: left;
+}
+
+.debt-item {
+  background-color: #ffcdd2; /* خلفية حمراء فاتحة للديون */
+  border: 1px solid #e57373; /* حدود حمراء */
+}
+
+.debt-item .label, .debt-item .label i {
+  color: #c62828; /* لون أحمر للنص والأيقونة */
+}
+
+.debt-item p {
+  color: #b71c1c; /* لون أحمر غامق للنص */
+}
+
+.debt-item p.has-debt::after {
+  content: ' ألف دينار';
+}
+
+/* تنسيق الفوتر */
+.footer-credit {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    margin-top: 40px;
+}
+
+.footer-credit a {
+    color: #2c6e49;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* زر تثبيت التطبيق بتصميم جديد */
+.install-pwa-btn {
+  background-color: #4CAF50; /* لون أخضر جميل */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px; /* حواف أكثر استدارة */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex; /* لترتيب الأيقونة والنص جنباً إلى جنب */
+  align-items: center; /* لمحاذاة الأيقونة والنص عمودياً */
+  justify-content: center; /* لتوسيط المحتوى */
+  gap: 8px; /* مسافة بين الأيقونة والنص */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* تأثيرات عند التفاعل */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* ظل ناعم */
+}
+
+.install-pwa-btn:hover {
+  background-color: #45a049; /* لون أغمق عند التحويم */
+  transform: translateY(-2px); /* تأثير رفع بسيط */
+}
+
+.install-pwa-btn .material-icons {
+  font-size: 22px; /* حجم الأيقونة */
+}
+/* تنسيقات الملاحظات في صفحة تسجيل الدخول */
+.note-section {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.note-section p {
+  margin: 0;
+  padding: 0;
+}
+
+.note-section b {
+  color: #2c6e49;
+}
+
+.note-section .warning-note {
+  font-size: 12px;
+  color: #a94442;
+  margin-top: 10px;
+}

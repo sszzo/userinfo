@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>معلومات المشترك</title>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div id="login-page" class="container">
+    <h2>تسجيل الدخول</h2>
+    <div id="login-error-message" class="error-message" style="display: none;"></div>
+    <label>اسم المستخدم:
+      <input type="text" id="username" placeholder="أدخل اسم المستخدم">
+    </label>
+    <label>كلمة المرور:
+      <input type="password" id="password" placeholder="أدخل كلمة المرور">
+    </label>
+    <button id="loginBtn">تسجيل الدخول</button>
+    <button id="installBtn" class="install-pwa-btn" style="display: none; margin-top: 10px;">
+      <i class="material-icons">install_mobile</i> تثبيت التطبيق
+    </button>
+    <div class="note-section">
+      <p><b>ملاحظة:</b> هذا الموقع يعمل فقط لوكلاء ايرثلنك.</p>
+      <p><b>اسم المستخدم:</b> افليت الوكيل</p>
+      <p><b>كلمة المرور:</b> باسوورد الافليت</p>
+      <p class="warning-note">جميع اكواد الموقع مبرمجة فرونت اند ، بياناتك لا يتم حفظها على سيرفرات المطور.</p>
+    </div>
+  </div>
+
+  <div id="main-content" style="display: none;">
+    <div class="tab-buttons">
+      <button id="subscription-tab-btn" class="active-tab">اشتراك</button>
+      <button id="payment-tab-btn">تسديد</button>
+    </div>
+
+    <div id="subscription-section">
+      <div class="container">
+        <h2>ادخال معلومات المشترك</h2>
+        <p id="loadingMessage">يتم جلب بيانات المشتركين تلقائياً...</p>
+        <label>اسم المشترك:
+          <select id="nameSelect"></select>
+        </label>
+        <label>مبلغ الاشتراك:
+          <select id="amount">
+          <option value="30">30</option>
+          <option value="35">35</option>
+          <option value="40">40</option>
+          <option value="45">45</option>
+          <option value="50">50</option>
+          <option value="55">55</option>
+          <option value="60">60</option>
+          <option value="65">65</option>
+          <option value="70">70</option>
+          <option value="75">75</option>
+          <option value="80">80</option>
+          <option value="85">85</option>
+          <option value="90">90</option>
+          <option value="95">95</option>
+          <option value="100">100</option>
+          <option value="120">120</option>
+          </select>
+        </label>
+        <label>الديون المتراكمة:
+          <textarea id="debt" rows="2"></textarea>
+        </label>
+        <button onclick="displayData()">عرض البيانات</button>
+        <button id="logoutBtn" class="custom-upload-btn" style="background-color: #a94442;"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+      </div>
+      <div class="card" id="resultCard">
+        <h3>معلومات المشترك</h3>
+        <div class="card-item">
+          <div class="label"><i class="fas fa-user"></i> اسم المشترك:</div>
+          <p id="resName"></p>
+        </div>
+        <div class="card-item">
+          <div class="label"><i class="fas fa-box"></i> نوع الاشتراك:</div>
+          <p id="resAccountName"></p>
+        </div>
+        <div class="card-item">
+          <div class="label"><i class="fas fa-calendar-plus"></i> تاريخ التفعيل:</div>
+          <p id="resStart"></p>
+        </div>
+        <div class="card-item">
+          <div class="label"><i class="fas fa-calendar-minus"></i> تاريخ الانتهاء:</div>
+          <p id="resEnd"></p>
+        </div>
+        <div class="card-item">
+          <div class="label"><i class="fas fa-clock"></i> وقت الانتهاء:</div>
+          <p id="resEndTime"></p>
+        </div>
+        <div class="card-item">
+          <div class="label"><i class="fas fa-dollar-sign"></i> مبلغ الاشتراك:</div>
+          <p id="resAmount"></p>
+        </div>
+        <div class="debt-section">
+          <span>الديون المتراكمة:</span>
+          <p id="resDebt"></p>
+        </div>
+        <div class="note">
+          ملاحظة: مدة الاشتراك 30 يوم، في حالة صادف الشهر 31 يومًا سوف يُخصم يوم من اشتراكك.
+        </div>
+      </div>
+      <div class="single-button-container" style="display: none;">
+        <button onclick="saveCardAsImage()">حفظ البطاقة</button>
+      </div>
+    </div>
+    
+    <div id="payment-section" style="display: none;">
+      <div class="container payment-container">
+        <h2>تسديد الاشتراك</h2>
+        <p id="paymentLoadingMessage" style="display: none;">يتم جلب بيانات المشتركين تلقائياً...</p>
+        <label>اسم المشترك:
+          <select id="paymentNameSelect"></select>
+        </label>
+        <label>تاريخ التسديد:
+          <div class="date-inputs">
+            <input type="number" id="paymentDayInput" placeholder="اليوم">
+            <input type="number" id="paymentMonthInput" placeholder="الشهر">
+          </div>
+        </label>
+        <label>المبلغ المسدد:
+          <input type="number" id="paidAmountInput" placeholder="أدخل المبلغ">
+        </label>
+        <label>الدين المتبقي:
+          <input type="number" id="remainingDebtInput" placeholder="اتركه فارغ اذا لايوجد ديون">
+        </label>
+        <button id="displayPaymentBtn" class="payment-btn"><i class="fas fa-eye"></i> عرض البطاقة</button>
+      </div>
+      <div class="card payment-result-card" id="paymentCard">
+        <h3>تم التسديد بنجاح</h3>
+        <div class="payment-card-item">
+          <div class="label"><i class="fas fa-user"></i> الاسم:</div>
+          <p id="paymentResName"></p>
+        </div>
+        <div class="payment-card-item">
+          <div class="label"><i class="fas fa-calendar-alt"></i> تاريخ التسديد:</div>
+          <p id="paymentResDate"></p>
+        </div>
+        <div class="payment-card-item">
+          <div class="label"><i class="fas fa-money-bill-wave"></i> المبلغ المسدد:</div>
+          <p id="paymentResAmount"></p>
+        </div>
+        <div class="payment-card-item debt-item">
+          <div class="label"><i class="fas fa-exclamation-triangle"></i> الدين المتبقي:</div>
+          <p id="paymentResDebt"></p>
+        </div>
+      </div>
+      <div class="single-button-container" style="display: none;">
+        <button onclick="savePaymentCardAsImage()">حفظ البطاقة</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
